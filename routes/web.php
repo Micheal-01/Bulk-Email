@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BulkEmailController;
 use App\Http\Controllers\RecipientsController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
@@ -27,11 +28,7 @@ Route::prefix('recipients')->name('recipients.')->group(function () {
 });
 
 
-Route::get('/test-email', function () {
-    Mail::raw('This is a test email.', function ($message) {
-        $message->to('michealtomisin239@gmail.com')
-                ->subject('Test Email');
-    });
-
-    return 'Email sent';
+Route::get('/run-migrate', function () {
+    Artisan::call('migrate', ['--force' => true]);
+    return 'Migration run successfully';
 });
